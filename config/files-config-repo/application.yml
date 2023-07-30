@@ -1,0 +1,52 @@
+server:
+  port: ${API_PORT:8080}
+  error:
+    include-stacktrace: NEVER
+# SPRING --------------------------------------------------------------------------------------
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  # LIQUIBASE - DISABLE DEFAULT
+  liquibase:
+    enabled: false
+  # MAX FILE SIZE
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  # JACKSON
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+# OKHTTP --------------------------------------------------------------------------------------
+okhttp.timeout:
+  connection: 120
+  read: 120
+  write: 120
+# EUREKA CLIENT CONFIG --------------------------------------------------------------------------------------
+eureka:
+  uri: ${EUREKA_URI:http://localhost:8761/eureka/}
+  instance:
+    hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost}
+    preferIpAddress: true
+  client:
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+    registerWithEureka: true
+    fetchRegistry: true
+
+internal.apigate.services:
+  user:
+    name: ${USER_SERVICE_NAME:PHONG-USER-SERVICE}
+  cert:
+    name: ${CERT_SERVICE_NAME:PHONG-CERT-SERVICE}
+# CACHING --------------------------------------------------------------------------------------
+cache.redis:
+  host: ${REDIS_CACHE_HOST:127.0.0.1}
+  port: ${REDIS_CACHE_PORT:6379}
+  lock:
+    #    With time unit: second
+    waiting-time: ${REDIS_CACHE_WAITING_TIME:10}
+zoom.api.url: https://api.zoom.us/v2

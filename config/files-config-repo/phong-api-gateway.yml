@@ -1,0 +1,43 @@
+server:
+  port: ${API_GATE_PORT:8090}
+  security:
+    authentication:
+      jwt:
+        secret-key: phong-api-key
+        validity-seconds: 360000
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: phong-user-service
+          uri: lb://phong-user-service
+          predicates:
+            - Path=/api/user/**
+        - id: phong-cert-service
+          uri: lb://phong-cert-service
+          predicate:
+            - Path = /api/cert/**
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/data_test_api2?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+    username: phong
+    password: Phamphong1
+  liquibase:
+    enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 396639615062-gru95vcrhiquvq437a2ie6dbb0drq8je.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: http://localhost:8090/login/oauth2/code/google
+            scope:
+              - email
+              - profile
+app:
+  cors:
+    allowedOrigins: http://localhost:3000,http://localhost:8090
+    clientOrigins : http://localhost:3000

@@ -1,0 +1,16 @@
+spring:
+  main.allow-bean-definition-overriding: true
+  application:
+    name: phong-user-service
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URI:http://localhost:8866}
+      fail-fast: true
+      enabled: true
+      retry:
+        max-attempts: 20
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true

@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: phong-service-discovery
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URI:http://localhost:8866}
+      fail-fast: true
+      retry:
+        max-attempts: 20

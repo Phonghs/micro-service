@@ -1,0 +1,19 @@
+server:
+   port: ${API_PORT:8761}
+eureka:
+   client:
+      registerWithEureka: false
+      fetchRegistry: false
+      healthcheck.enabled: true
+   server:
+      enable-self-preservation: false #Configuration for disabling self-preservation – the default value is true
+      expected-client-renewal-interval-seconds: 30 #The server expects client heartbeats at an interval configured with this property – the default value is 30
+      eviction-interval-timer-in-ms: 10000 #This property tells the Eureka server to run a job at this frequency to evict the expired clients – the default value is 60 seconds
+      renewal-percent-threshold: 0.85 #Based on this property, the server calculates the expected heartbeats per minute from all the registered clients – the default value is 0.85
+      renewal-threshold-update-interval-ms: 900000 #This property tells the Eureka server to run a job at this frequency to calculate the expected heartbeats from all the registered clients at this minute – the default value is 15 minutes
+   instance:
+      lease-expiration-duration-in-seconds: 60 #Indicates the time in seconds that the Eureka server waits since it received the last heartbeat from a client before it can remove that client from its registry – the default value is 90
+spring:
+  freemarker:
+    template-loader-path: classpath:/templates/
+    prefer-file-system-access: false

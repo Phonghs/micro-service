@@ -1,0 +1,17 @@
+server:
+  port: 8866
+spring:
+  profiles:
+    include: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:files-config-repo,file:config/files-config-repo
+  application:
+    name: config-server
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+
