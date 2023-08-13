@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.net.URI;
+import java.util.List;
 
 @FeignClient(name = "phong-user-servive", url = "NOT_USED" // template
 ,configuration = FeignConfig.class)
@@ -29,4 +30,9 @@ public interface UserServiceProxy {
 			URI uri,
 			@RequestBody UserRegistrationRequest request
 	);
+
+	@GetMapping("/internal-user/list-student")
+	ResponseEntity<List<UserProfileResponse>> getListStudent(
+			URI uri
+	) ;
 }

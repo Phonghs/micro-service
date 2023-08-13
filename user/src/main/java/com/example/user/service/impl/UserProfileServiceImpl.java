@@ -118,6 +118,12 @@ public class UserProfileServiceImpl implements UserProfileService {
 		throw new BadRequestException("old password is wrong");
 	}
 
+	@Override
+	public List<UserProfileResponse> getListStudent() {
+		return userRepository.findByRole(RoleEnum.USER.getName()).stream()
+				.filter(Objects::nonNull).map(e -> modelMapper.map(e,UserProfileResponse.class)).collect(Collectors.toList());
+	}
+
 	private static String buildBodyNotifyCreateAccount(String name,String username,String password){
 		StringBuilder builder = new StringBuilder();
 

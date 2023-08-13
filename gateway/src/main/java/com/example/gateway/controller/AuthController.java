@@ -2,6 +2,7 @@ package com.example.gateway.controller;
 
 import com.example.common.proxy.exception.BadRequestException;
 import com.example.common.proxy.user.payload.request.UserRegistrationRequest;
+import com.example.common.proxy.user.payload.response.UserProfileResponse;
 import com.example.gateway.payload.Response.LoginResponse;
 import com.example.gateway.payload.request.AuthenticateRequest;
 import com.example.gateway.service.UserService;
@@ -26,7 +27,15 @@ public class AuthController extends BaseController{
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> login(@RequestBody @Valid AuthenticateRequest request) {
 		if(userService.exists(request)) {
-			return ResponseEntity.ok(LoginResponse.builder().accessToken(jwtUtils.generateToken(request.getUsername())).build());
+			UserProfileResponse user = userService.findByUserName(request.getUsername());
+			return ResponseEntity.ok(LoginResponse.builder()
+					.accessToken(jwtUtils.generateToken(request.getUsername()))
+					.avatar(user.getAvatar())
+					.userName(user.getUsername())
+					.fullName(user.getName())
+					.role(user.getRole())
+					.email(user.getEmail())
+					.build());
 		}
 		throw new BadRequestException("user name are not exits");
 	}
